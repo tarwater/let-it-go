@@ -9,16 +9,19 @@ class App extends Component {
 
         this.state = {
             cards: [],
-            name: ''
+            name: '',
+            time: Date.now()
         }
-
-        this.newItem = this.newItem.bind(this);
     }
 
-    newItem() {
+    componentDidMount() {
+        this.runTimer();
+    }
+
+    newItem = () => {
         let cards = this.state.cards;
         cards.push({
-            id: Date.now(),
+            date: Date.now(),
             name: this.state.name
         });
 
@@ -32,9 +35,17 @@ class App extends Component {
         this.setState({name: event.target.value})
     };
 
+    runTimer = () => {
+        setInterval(() => {
+            this.setState({
+                time: Date.now()
+            })
+        }, 1000);
+    }
+
     render() {
         let cards = this.state.cards.map(c => {
-            return <Card key={c.id} id={c.id} name={c.name}/>
+            return <Card key={c.date} date={c.date} name={c.name} time={this.state.time}/>
         });
 
         return (
@@ -46,7 +57,8 @@ class App extends Component {
                     {cards}
                 </ul>
 
-                <input type="text" placeholder="i gave up this" value={this.state.name} onChange={this.handleOnNameChange}/>
+                <input type="text" placeholder="i gave up this" value={this.state.name}
+                       onChange={this.handleOnNameChange}/>
                 <button id="add" onClick={this.newItem}>I'm Done</button>
             </div>
         );
