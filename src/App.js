@@ -57,9 +57,13 @@ class App extends Component {
                     {cards}
                 </ul>
 
-                <input type="text" placeholder="i gave up this" value={this.state.name}
-                       onChange={this.handleOnNameChange}/>
-                <button id="add" onClick={this.newItem}>I'm Done</button>
+                <div className="controls">
+                    <input type="text" placeholder="i gave up this" value={this.state.name}
+                           onChange={this.handleOnNameChange}/>
+                    <span>on:</span>
+                    <input placeholder="date"/>
+                    <button id="add" onClick={this.newItem}>I'm Done</button>
+                </div>
             </div>
         );
     }

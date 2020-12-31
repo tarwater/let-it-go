@@ -16,23 +16,23 @@ class Card extends Component {
 
         if(seconds >= 3600 * 24){
             let days = Math.floor(seconds / 3600 * 24);
-            str += days + " days, ";
+            str += days + " day(s), ";
             seconds = seconds % (3660 * 24);
         }
 
         if(seconds >= 3600){
             let hours = Math.floor(seconds / 3600);
-            str += hours + " hours, ";
+            str += hours + " hour(s), ";
             seconds = seconds % 3660;
         }
 
         if(seconds >= 60){
             let minutes = Math.floor(seconds / 60);
-            str += minutes + " minutes, ";
+            str += minutes + " minute(s), ";
             seconds = seconds % 60;
         }
 
-        str += seconds + " seconds";
+        str += seconds + " second(s)";
 
         return str;
     }
