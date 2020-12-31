@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './App.css';
 import Card from "./components/Card/Card";
+import "flatpickr/dist/themes/material_green.css";
+import Flatpickr from "react-flatpickr";
 
 class App extends Component {
 
@@ -10,7 +12,8 @@ class App extends Component {
         this.state = {
             cards: [],
             name: '',
-            time: Date.now()
+            time: Date.now(),
+            abstention: null
         }
     }
 
@@ -18,16 +21,18 @@ class App extends Component {
         this.runTimer();
     }
 
-    newItem = () => {
+    newItem = (e) => {
+        e.preventDefault();
         let cards = this.state.cards;
         cards.push({
-            date: Date.now(),
-            name: this.state.name
+            date: this.state.abstention || Date.now(),
+            name: this.state.name,
+            key: new Date().getTime()
         });
 
         this.setState({
             cards: cards,
-            name: ''
+            name: '',
         })
     }
 
@@ -45,7 +50,7 @@ class App extends Component {
 
     render() {
         let cards = this.state.cards.map(c => {
-            return <Card key={c.date} date={c.date} name={c.name} time={this.state.time}/>
+            return <Card key={c.key} date={c.date} name={c.name} time={this.state.time}/>
         });
 
         return (
@@ -53,17 +58,24 @@ class App extends Component {
                 <h1>Renunciation Timer</h1>
                 <h2>give it up</h2>
 
+                <div className="controls">
+                    <form onSubmit={this.newItem}>
+                        <input type="text" placeholder="i gave up this" value={this.state.name}
+                               onChange={this.handleOnNameChange} required/>
+                        <span>on:</span>
+                        <Flatpickr
+                            data-enable-time
+                            onChange={date => {
+                                this.setState({abstention: date});
+                            }}
+                        />
+                        <button id="add" type="submit">I'm Done</button>
+                    </form>
+                </div>
+
                 <ul id="list">
                     {cards}
                 </ul>
-
-                <div className="controls">
-                    <input type="text" placeholder="i gave up this" value={this.state.name}
-                           onChange={this.handleOnNameChange}/>
-                    <span>on:</span>
-                    <input placeholder="date"/>
-                    <button id="add" onClick={this.newItem}>I'm Done</button>
-                </div>
             </div>
         );
     }

@@ -14,10 +14,10 @@ class Card extends Component {
 
         let str = "";
 
-        if(seconds >= 3600 * 24){
-            let days = Math.floor(seconds / 3600 * 24);
+        if(seconds >= 86400){
+            let days = Math.floor(seconds / 86400);
             str += days + " day(s), ";
-            seconds = seconds % (3660 * 24);
+            seconds = seconds % 86400;
         }
 
         if(seconds >= 3600){
