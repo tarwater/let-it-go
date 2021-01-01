@@ -24,8 +24,17 @@ class App extends Component {
     newItem = (e) => {
         e.preventDefault();
         let cards = this.state.cards;
+
+        let date;
+
+        if(this.state.abstention == null || this.state.abstention.length === 0){
+            date = new Date();
+        } else {
+            date = this.state.abstention;
+        }
+
         cards.push({
-            date: this.state.abstention || Date.now(),
+            date: date,
             name: this.state.name,
             key: new Date().getTime()
         });
@@ -68,6 +77,7 @@ class App extends Component {
                             onChange={date => {
                                 this.setState({abstention: date});
                             }}
+                            options={{maxDate: Date.now()}}
                         />
                         <button id="add" type="submit">I'm Done</button>
                     </form>

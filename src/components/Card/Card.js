@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Indicator from "./Indicator/Indicator";
 
 class Card extends Component {
 
@@ -12,37 +13,43 @@ class Card extends Component {
 
         seconds++; // always a second behind -- why?
 
-        let str = "";
+        let values = {
+            days: 0,
+            mins: 0,
+            hours: 0
+        };
 
         if(seconds >= 86400){
-            let days = Math.floor(seconds / 86400);
-            str += days + " day(s), ";
+            values["days"] = Math.floor(seconds / 86400);
             seconds = seconds % 86400;
         }
 
         if(seconds >= 3600){
-            let hours = Math.floor(seconds / 3600);
-            str += hours + " hour(s), ";
+            values["hours"] = Math.floor(seconds / 3600);
             seconds = seconds % 3660;
         }
 
         if(seconds >= 60){
-            let minutes = Math.floor(seconds / 60);
-            str += minutes + " minute(s), ";
+            values["mins"] = Math.floor(seconds / 60);
             seconds = seconds % 60;
         }
 
-        str += seconds + " second(s)";
-
-        return str;
+        values["secs"] = seconds
+        return values;
     }
 
     render() {
         let timestamp = new Date(this.props.date);
-        let timeString = this.timeSince(timestamp);
+        let vals = this.timeSince(timestamp);
 
         return (
-            <li><span>{timeString}</span> since <span>{this.props.name}</span></li>
+            <li className="card">
+                <span className="card-title">{this.props.name}</span>
+                <Indicator label="days" value={vals.days}/>
+                <Indicator label="hours" value={vals.hours}/>
+                <Indicator label="mins" value={vals.mins}/>
+                <Indicator label="secs" value={vals.secs}/>
+            </li>
         )
     }
 }
