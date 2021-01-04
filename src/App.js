@@ -13,7 +13,9 @@ class App extends Component {
             cards: [],
             name: '',
             time: Date.now(),
-            abstention: null
+            abstention: null,
+            activeCard: null,
+            maxCalendarTime: Date.now()
         }
     }
 
@@ -23,8 +25,10 @@ class App extends Component {
 
     newItem = (e) => {
         e.preventDefault();
-        let cards = this.state.cards;
 
+        if(this.state.name === "") return;
+
+        let cards = this.state.cards;
         let date;
 
         if(this.state.abstention == null || this.state.abstention.length === 0){
@@ -33,15 +37,17 @@ class App extends Component {
             date = this.state.abstention;
         }
 
-        cards.push({
+        let newCard = {
             date: date,
             name: this.state.name,
             key: new Date().getTime()
-        });
+        };
+        cards.push(newCard);
 
         this.setState({
             cards: cards,
             name: '',
+            activeCard: newCard.key
         })
     }
 
@@ -58,9 +64,13 @@ class App extends Component {
     }
 
     render() {
-        let cards = this.state.cards.map(c => {
-            return <Card key={c.key} date={c.date} name={c.name} time={this.state.time}/>
-        });
+
+        let activeCard = this.state.cards.find(c => c.key === this.state.activeCard) || null;
+        activeCard = activeCard !== null ? <Card key={activeCard.key} date={activeCard.date} name={activeCard.name} time={this.state.time}/> : null;
+
+        let cards = this.state.cards.map(c =>
+            <li onClick={() => this.setState({activeCard: c.key})}>{c.name}</li>
+        );
 
         return (
             <div className="App">
@@ -69,21 +79,21 @@ class App extends Component {
 
                 <div className="controls">
                     <form onSubmit={this.newItem}>
-                        <input type="text" placeholder="i gave up this" value={this.state.name}
-                               onChange={this.handleOnNameChange} required/>
-                        <span>on:</span>
+                        <input type="text" placeholder="I gave up this" value={this.state.name}
+                               onChange={this.handleOnNameChange}/>
+                        <span className="on">on</span>
                         <Flatpickr
                             data-enable-time
                             onChange={date => {
                                 this.setState({abstention: date});
                             }}
-                            options={{maxDate: Date.now()}}
+                            options={{maxDate: this.state.maxCalendarTime}}
                         />
-                        <button id="add" type="submit">I'm Done</button>
+                        <button id="add" type="submit">Done With It</button>
                     </form>
                 </div>
-
-                <ul id="list">
+                {activeCard}
+                <ul>
                     {cards}
                 </ul>
             </div>

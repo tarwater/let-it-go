@@ -43,13 +43,15 @@ class Card extends Component {
         let vals = this.timeSince(timestamp);
 
         return (
-            <li className="card">
+            <div className="card">
                 <span className="card-title">{this.props.name}</span>
-                <Indicator label="days" value={vals.days}/>
-                <Indicator label="hours" value={vals.hours}/>
-                <Indicator label="mins" value={vals.mins}/>
-                <Indicator label="secs" value={vals.secs}/>
-            </li>
+                <div className="indicator-container">
+                    <Indicator label="days" value={vals.days}/>
+                    <Indicator label="hours" value={vals.hours}/>
+                    <Indicator label="mins" value={vals.mins}/>
+                    <Indicator label="secs" value={vals.secs}/>
+                </div>
+            </div>
         )
     }
 }

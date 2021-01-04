@@ -56,6 +56,17 @@ button {
     }
 }
 
+input {
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: black;
+    font-size: 1.2em;
+}
+
+.on {
+    font-size: 1.2em;
+}
+
 .controls {
     margin: 25px;
 }
@@ -64,30 +75,31 @@ button {
     margin: 0px 25px;
 }
 
-ul {
-    list-style: none;
-}
-
 .card {
-    display: inline-block;
-    border: 1px solid #333;
+    display: block;
+    border-bottom: 1px solid #333;
     padding: 15px 25px;
-    border-radius: 5px;
     margin: 5px;
 }
 
 .card-title {
     text-align: center;
     display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.indicator-container {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    margin: 25px auto;
 }
 
 .indicator {
-    border: 1px solid gray;
-    font-size: .8em;
     text-align: center;
-    margin: 15px 8px 8px 0;
     display: inline-block;
-    min-width: 40px;
+    font-size: 2em;
 }
 
 .indicator div {
@@ -96,4 +108,19 @@ ul {
 
 .indicator-label {
     border-top: 1px solid gray;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    display: inline-block;
+    margin-left: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+li:hover {
+    text-decoration: none;
 }
